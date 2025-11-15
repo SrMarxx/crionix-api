@@ -1,5 +1,7 @@
 package br.com.smarttech.crionix.business.services;
 
+import br.com.smarttech.crionix.business.models.entities.AdminEntity;
+import br.com.smarttech.crionix.business.models.entities.ColaboradorEntity;
 import br.com.smarttech.crionix.business.models.entities.GeradorMatriculaEntity;
 import br.com.smarttech.crionix.business.models.entities.UserEntity;
 import br.com.smarttech.crionix.business.models.repositories.IGeradorMatriculaJpaRepository;
@@ -57,9 +59,6 @@ public class UserService {
 
         UserEntity user = switch (userDTO.cargo()){
             case COLABORADOR -> new ColaboradorEntity();
-            case RH -> new RHEntity();
-            case GESTOR_RH -> new GestorRHEntity();
-            case TI -> new TIEntity();
             case ADMIN -> new AdminEntity();
         };
 
