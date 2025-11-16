@@ -1,1 +1,1 @@
-rootProject.name = "crionix"
+rootProject.name = "frigonix"
