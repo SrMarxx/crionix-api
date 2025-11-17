@@ -3,13 +3,11 @@ package br.com.smarttech.frigonix.controllers;
 import br.com.smarttech.frigonix.business.services.MaquinaService;
 import br.com.smarttech.frigonix.controllers.dtos.MaquinaRequestRecordDTO;
 import br.com.smarttech.frigonix.controllers.dtos.MaquinaResponseRecordDTO;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
@@ -33,7 +31,7 @@ public class MaquinaController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('SCOPE_CRIAR')")
-    public ResponseEntity<Void> criarMaquina(MaquinaRequestRecordDTO maquinaDTO){
+    public ResponseEntity<Void> criarMaquina(@RequestBody @Valid MaquinaRequestRecordDTO maquinaDTO){
         MaquinaResponseRecordDTO newMaquinaDTO = maquinaService.newMaquina(maquinaDTO);
         URI location = URI.create("/api/maquinas/" + newMaquinaDTO.id());
         return ResponseEntity.created(location).build();

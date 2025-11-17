@@ -1,14 +1,15 @@
 package br.com.smarttech.frigonix.controllers;
 
 import br.com.smarttech.frigonix.business.services.SensorService;
+import br.com.smarttech.frigonix.controllers.dtos.LeituraRequestRecordDTO;
+import br.com.smarttech.frigonix.controllers.dtos.LeituraResponseRecordDTO;
 import br.com.smarttech.frigonix.controllers.dtos.SensorRequestRecordDTO;
 import br.com.smarttech.frigonix.controllers.dtos.SensorResponseRecordDTO;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
@@ -24,9 +25,16 @@ public class SensorController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('SCOPE_CRIAR')")
-    public ResponseEntity<Void> criarSensor(SensorRequestRecordDTO sensorDTO){
+    public ResponseEntity<Void> criarSensor(@RequestBody @Valid SensorRequestRecordDTO sensorDTO){
         SensorResponseRecordDTO newSensorDTO = sensorService.newSensor(sensorDTO);
         URI location = URI.create("/api/sensores/" + newSensorDTO.id());
+        return ResponseEntity.created(location).build();
+    }
+
+    @PostMapping("/{sensorId}")
+    public ResponseEntity<Void> novaLeitura(@PathVariable Long id, @RequestBody @Valid LeituraRequestRecordDTO leituraRequestDTO){
+        LeituraResponseRecordDTO newLeituraDTO = sensorService.newLeitura(id, leituraRequestDTO);
+        URI location = URI.create("/api/leitura/" + newLeituraDTO.id());
         return ResponseEntity.created(location).build();
     }
 }
