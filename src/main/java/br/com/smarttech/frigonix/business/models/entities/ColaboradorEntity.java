@@ -13,7 +13,7 @@ import java.util.List;
 public class ColaboradorEntity extends UserEntity{
     @Override
     public void defineRoles(IRoleJpaRepository roleRepository) {
-        List<RoleEntity> roles = roleRepository.findAllById(List.of(RoleEntity.Values.BATER_PONTO.getRoleId()));
+        List<RoleEntity> roles = roleRepository.findAllById(List.of(RoleEntity.Values.VISUALIZAR.getRoleId()));
         this.setRoles(new HashSet<>(roles));
     }
 

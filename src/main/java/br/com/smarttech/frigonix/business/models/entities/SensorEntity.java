@@ -14,7 +14,8 @@ public class SensorEntity {
     private Long id;
     private String name;
     private String description;
-    private Set<TipoSensor> types;
+    @Enumerated(EnumType.STRING)
+    private TipoSensor type;
 
     public Long getId() {
         return id;
@@ -40,11 +41,11 @@ public class SensorEntity {
         this.description = description;
     }
 
-    public Set<TipoSensor> getTypes() {
-        return types;
+    public TipoSensor getType() {
+        return type;
     }
 
-    public void setTypes(Set<TipoSensor> types) {
-        this.types = types;
+    public void setType(TipoSensor type) {
+        this.type = type;
     }
 }

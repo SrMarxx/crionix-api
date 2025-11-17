@@ -13,7 +13,7 @@ public class AdminEntity extends ColaboradorEntity{
     @Override
     public void defineRoles(IRoleJpaRepository roleRepository){
         super.defineRoles(roleRepository);
-        List<RoleEntity> adminRoles = roleRepository.findAllById(List.of(RoleEntity.Values.ADMINISTRAR.getRoleId()));
+        List<RoleEntity> adminRoles = roleRepository.findAllById(List.of(RoleEntity.Values.CRIAR.getRoleId()));
         this.getRoles().addAll(adminRoles);
     }
 

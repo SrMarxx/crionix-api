@@ -30,13 +30,8 @@ public class RoleEntity {
     }
 
     public enum Values{
-        CORRIGIR_PONTO(1L),
-        BATER_PONTO(2L),
-        GERAR_RELATORIO(3L),
-        CADASTRAR_USUARIOS(4L),
-        LISTAR_USUARIOS(5L),
-        ADMINISTRAR(6L);
-
+        CRIAR(1L),
+        VISUALIZAR(2L);
 
         long roleId;
 

@@ -30,7 +30,7 @@ public class UserController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('SCOPE_CADASTRAR_USUARIOS')")
+    @PreAuthorize("hasAuthority('SCOPE_CRIAR')")
     public ResponseEntity<Void> newUser(@RequestBody @Valid UserRequestRecordDTO userRecordDTO) {
         UserResponseRecordDTO newUserDTO = userService.createNewUser(userRecordDTO);
 
@@ -39,21 +39,21 @@ public class UserController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyAuthority('SCOPE_LISTAR_USUARIOS', 'SCOPE_CADASTRAR_USUARIOS')")
+    @PreAuthorize("hasAuthority('SCOPE_CRIAR')")
     public ResponseEntity<List<UserResponseRecordDTO>> getUser(){
         var users = userService.findAllUsers();
         return ResponseEntity.ok(users);
     }
 
     @PatchMapping("/{id}")
-    @PreAuthorize("hasAnyAuthority('SCOPE_ADMINISTRAR', 'SCOPE_LISTAR_USUARIOS') or #id.toString() == authentication.principal.subject")
+    @PreAuthorize("hasAuthority('SCOPE_CRIAR') or #id.toString() == authentication.principal.subject")
     public ResponseEntity<UserResponseRecordDTO> updateUser(@PathVariable UUID id, @RequestBody @Valid UserUpdateRecordDTO userUpdateDTO){
         var updatedUser = userService.updateUser(id, userUpdateDTO);
         return ResponseEntity.ok(updatedUser);
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('SCOPE_CADASTRAR_USUARIOS')")
+    @PreAuthorize("hasAuthority('SCOPE_CRIAR')")
     public ResponseEntity<Void> deleteUser(@PathVariable UUID id){
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
@@ -89,7 +89,7 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    @PreAuthorize("hasAnyAuthority('SCOPE_LISTAR_USUARIOS', 'SCOPE_CADASTRAR_USUARIOS')")
+    @PreAuthorize("hasAuthority('SCOPE_CRIAR')")
     public ResponseEntity<UserResponseRecordDTO> getUserById(@PathVariable UUID userId){
         UserResponseRecordDTO userResponseDTO = userService.findById(userId);
         return ResponseEntity.ok(userResponseDTO);

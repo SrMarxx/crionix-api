@@ -34,8 +34,6 @@ public abstract class UserEntity implements Serializable {
     private LocalDate nascimento;
     @Column(unique = true)
     private String matricula;
-    @ManyToOne(fetch = FetchType.LAZY)
-    private EmpresaEntity empresa;
     private String email;
     private String password;
     @Column(nullable = false)
@@ -57,14 +55,6 @@ public abstract class UserEntity implements Serializable {
     }
 
     public abstract Cargo getCargo();
-
-    public EmpresaEntity getEmpresa() {
-        return empresa;
-    }
-
-    public void setEmpresa(EmpresaEntity empresa) {
-        this.empresa = empresa;
-    }
 
     public String getName(){
         return name;

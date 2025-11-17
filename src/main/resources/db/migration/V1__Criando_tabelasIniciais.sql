@@ -9,22 +9,19 @@ CREATE TABLE gerador_matricula
     CONSTRAINT pk_gerador_matricula PRIMARY KEY (ano)
 );
 
-CREATE TABLE tb_empresas
-(
-    id       UUID NOT NULL,
-    nome     VARCHAR(255),
-    email    VARCHAR(255),
-    telefone VARCHAR(255),
-    cnpj     VARCHAR(255),
-    CONSTRAINT pk_tb_empresas PRIMARY KEY (id)
-);
-
 CREATE TABLE tb_maquinas
 (
     maquina_id  BIGINT NOT NULL,
     name        VARCHAR(255),
     description VARCHAR(255),
-    empresa_id  UUID,
+    tensao_padrao      DOUBLE PRECISION,
+    tensao_variacao     DOUBLE PRECISION,
+    temperatura_padrao DOUBLE PRECISION,
+    temperatura_variacao       DOUBLE PRECISION,
+    pressao_padrao     DOUBLE PRECISION,
+    pressao_variacao       DOUBLE PRECISION,
+    humidade_padrao    DOUBLE PRECISION,
+    humidade_variacao       DOUBLE PRECISION,
     CONSTRAINT pk_tb_maquinas PRIMARY KEY (maquina_id)
 );
 
@@ -47,7 +44,7 @@ CREATE TABLE tb_sensores
     sensor_id   BIGINT NOT NULL,
     name        VARCHAR(255),
     description VARCHAR(255),
-    types       SMALLINT[],  -- Troque de SMALLINT para SMALLINT[]
+    type       VARCHAR(20),
     CONSTRAINT pk_tb_sensores PRIMARY KEY (sensor_id)
 );
 
@@ -59,7 +56,6 @@ CREATE TABLE tb_users
     cpf                  VARCHAR(255),
     nascimento           date,
     matricula            VARCHAR(255),
-    empresa_id           UUID,
     email                VARCHAR(255),
     password             VARCHAR(255),
     must_change_password BOOLEAN     NOT NULL,
@@ -77,12 +73,6 @@ CREATE TABLE tb_users_roles
 ALTER TABLE tb_users
     ADD CONSTRAINT uc_tb_users_matricula UNIQUE (matricula);
 
-ALTER TABLE tb_maquinas
-    ADD CONSTRAINT FK_TB_MAQUINAS_ON_EMPRESA FOREIGN KEY (empresa_id) REFERENCES tb_empresas (id);
-
-ALTER TABLE tb_users
-    ADD CONSTRAINT FK_TB_USERS_ON_EMPRESA FOREIGN KEY (empresa_id) REFERENCES tb_empresas (id);
-
 ALTER TABLE tb_maquinas_sensores
     ADD CONSTRAINT fk_tbmaqsen_on_maquina_entity FOREIGN KEY (maquina_id) REFERENCES tb_maquinas (maquina_id);
 
@@ -94,3 +84,26 @@ ALTER TABLE tb_users_roles
 
 ALTER TABLE tb_users_roles
     ADD CONSTRAINT fk_tbuserol_on_user_entity FOREIGN KEY (user_id) REFERENCES tb_users (user_id);
+
+CREATE TABLE tb_leituras (
+    id BIGSERIAL PRIMARY KEY,
+    valor DOUBLE PRECISION NOT NULL,
+    sensor_id BIGINT NOT NULL,
+    timestamp TIMESTAMP NOT NULL,
+
+    CONSTRAINT fk_leitura_sensor
+        FOREIGN KEY (sensor_id)
+        REFERENCES tb_sensores(sensor_id)
+        ON DELETE CASCADE
+);
+
+-- Índices para otimizar consultas por sensor e timestamp
+CREATE INDEX idx_sensor_timestamp ON tb_leituras(sensor_id, timestamp);
+CREATE INDEX idx_timestamp ON tb_leituras(timestamp);
+
+-- Comentários para documentação
+COMMENT ON TABLE tb_leituras IS 'Armazena as leituras dos sensores';
+COMMENT ON COLUMN tb_leituras.id IS 'Identificador único da leitura';
+COMMENT ON COLUMN tb_leituras.valor IS 'Valor da leitura do sensor';
+COMMENT ON COLUMN tb_leituras.sensor_id IS 'Referência ao sensor que gerou a leitura';
+COMMENT ON COLUMN tb_leituras.timestamp IS 'Data e hora da leitura';
