@@ -15,6 +15,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class SensorService {
     private final ISensorJpaRepository sensorRepository;
@@ -48,5 +51,10 @@ public class SensorService {
 
         LeituraEntity savedLeitura = leituraRepository.save(leitura);
         return LeituraMapper.toResponseDTO(savedLeitura);
+    }
+
+    public List<SensorResponseRecordDTO> listSensors(){
+        List<SensorEntity> sensores =  sensorRepository.findAll();
+        return sensores.stream().map(SensorMapper::toResponseDTO).collect(Collectors.toList());
     }
 }

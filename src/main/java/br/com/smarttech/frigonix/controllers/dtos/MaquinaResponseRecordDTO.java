@@ -1,5 +1,7 @@
 package br.com.smarttech.frigonix.controllers.dtos;
 
+import java.util.List;
+
 public record MaquinaResponseRecordDTO(
         Long id,
         String name,
@@ -11,6 +13,7 @@ public record MaquinaResponseRecordDTO(
         Double pressaoPadrao,
         Double pressaoVariacao,
         Double humidadePadrao,
-        Double humidadeVariacao
+        Double humidadeVariacao,
+        List<SensorResponseRecordDTO> sensores
 ) {
 }

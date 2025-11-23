@@ -57,6 +57,7 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/api/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/sensores/").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/csrf").permitAll()
                         .anyRequest().authenticated()
                 )

@@ -8,7 +8,8 @@ public class LeituraMapper {
         return new LeituraResponseRecordDTO(
                 entity.getId(),
                 entity.getValor(),
-                entity.getTimestamp()
+                entity.getTimestamp(),
+                entity.getSensor().getType()
         );
     }
 }

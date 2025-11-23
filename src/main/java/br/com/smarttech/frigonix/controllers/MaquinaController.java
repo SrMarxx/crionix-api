@@ -1,6 +1,7 @@
 package br.com.smarttech.frigonix.controllers;
 
 import br.com.smarttech.frigonix.business.services.MaquinaService;
+import br.com.smarttech.frigonix.controllers.dtos.LeituraResponseRecordDTO;
 import br.com.smarttech.frigonix.controllers.dtos.MaquinaRequestRecordDTO;
 import br.com.smarttech.frigonix.controllers.dtos.MaquinaResponseRecordDTO;
 import jakarta.validation.Valid;
@@ -27,6 +28,13 @@ public class MaquinaController {
     public ResponseEntity<List<MaquinaResponseRecordDTO>> listarMaquinas(){
         List<MaquinaResponseRecordDTO> maquinas = maquinaService.findAll();
         return ResponseEntity.ok(maquinas);
+    }
+
+    @GetMapping("/{maquinaId}")
+    @PreAuthorize("hasAnyAuthority('SCOPE_VISUALIZAR')")
+    public ResponseEntity<List<LeituraResponseRecordDTO>> lastLeituras(@PathVariable Long maquinaId){
+        List<LeituraResponseRecordDTO> leituras = maquinaService.getLeituras(maquinaId);
+        return ResponseEntity.ok(leituras);
     }
 
     @PostMapping
