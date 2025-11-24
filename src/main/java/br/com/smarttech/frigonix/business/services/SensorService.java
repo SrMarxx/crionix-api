@@ -57,4 +57,9 @@ public class SensorService {
         List<SensorEntity> sensores =  sensorRepository.findAll();
         return sensores.stream().map(SensorMapper::toResponseDTO).collect(Collectors.toList());
     }
+
+    public LeituraResponseRecordDTO getLeitura(Long id){
+        LeituraEntity leitura = leituraRepository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Leitura não encontrada."));
+        return LeituraMapper.toResponseDTO(leitura);
+    }
 }

@@ -44,4 +44,11 @@ public class MaquinaController {
         URI location = URI.create("/api/maquinas/" + newMaquinaDTO.id());
         return ResponseEntity.created(location).build();
     }
+
+    @DeleteMapping("{maquinaId}")
+    @PreAuthorize("hasAnyAuthority('SCOPE_CRIAR')")
+    public ResponseEntity<Void> deletarMaquina(@PathVariable Long maquinaId){
+        maquinaService.deleteMaquina(maquinaId);
+        return ResponseEntity.ok().build();
+    }
 }

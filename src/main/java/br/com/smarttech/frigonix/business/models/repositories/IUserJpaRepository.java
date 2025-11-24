@@ -10,4 +10,5 @@ public interface IUserJpaRepository extends JpaRepository<UserEntity, UUID> {
     Optional<UserEntity> findByMatricula(String matricula);
     Optional<UserEntity> findByCpf(String cpf);
     Optional<UserEntity> findByEmail(String email);
+    long countByActiveTrue();
 }

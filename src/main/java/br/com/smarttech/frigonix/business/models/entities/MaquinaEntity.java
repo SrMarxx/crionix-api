@@ -36,6 +36,7 @@ public class MaquinaEntity {
             inverseJoinColumns = @JoinColumn (name = "sensor_id")
     )
     private Set<SensorEntity> sensors;
+    private Boolean ativo;
 
     public Long getId() {
         return id;
@@ -131,5 +132,13 @@ public class MaquinaEntity {
 
     public void setHumidadeVariacao(Double humidadeVariacao) {
         this.humidadeVariacao = humidadeVariacao;
+    }
+
+    public Boolean getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
     }
 }

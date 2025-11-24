@@ -7,19 +7,19 @@ public record ResumoResponseRecordDTO(
     TaxaFalha falhas
 ) {
     public record Equipamentos(
-            Integer quantidadeAtual,
+            Long quantidadeAtual,
             Double vsMesAnterior
     ){}
     public record ManutencoesPendentes(
-            Integer quantidadePendentes,
-            Integer quantidadeUrgentes
+            Long quantidadePendentes,
+            Long quantidadeUrgentes
     ){}
     public record ManutencoesConcluidas(
-            Integer quantidadeAtual,
+            Long quantidadeAtual,
             Double vsMesAnterior
     ){}
     public record TaxaFalha(
-            Double quantidadeFalha,
+            Long quantidadeFalha,
             Double vsMesAnterior
     ){}
 }

@@ -6,6 +6,7 @@ import br.com.smarttech.frigonix.business.models.entities.UserEntity;
 import br.com.smarttech.frigonix.business.models.repositories.IManutencaoJpaRepository;
 import br.com.smarttech.frigonix.business.models.repositories.IMaquinaJpaRepository;
 import br.com.smarttech.frigonix.business.models.repositories.IUserJpaRepository;
+import br.com.smarttech.frigonix.controllers.dtos.ManutencaoConclusaoRequestRecordDTO;
 import br.com.smarttech.frigonix.controllers.dtos.ManutencaoRequestRecordDTO;
 import br.com.smarttech.frigonix.controllers.dtos.ManutencaoResponseRecordDTO;
 import br.com.smarttech.frigonix.controllers.mappers.ManutencaoMapper;
@@ -92,10 +93,12 @@ public class ManutencaoService {
         return ManutencaoMapper.toResponseDTO(saved);
     }
 
-    public void concluirManutencao(Long manutencaoId) {
+    public void concluirManutencao(Long manutencaoId, ManutencaoConclusaoRequestRecordDTO manutencaoConclusaoDTO) {
         ManutencaoEntity manutencao = manutencaoRepository.findById(manutencaoId).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Manutenção não encontrada."));
 
         manutencao.setDataConclusao(LocalDateTime.now());
+        manutencao.setConclusao(manutencaoConclusaoDTO.conclusao());
+        manutencao.setRelatorio(manutencaoConclusaoDTO.relatorio());
         manutencao.setAtivo(false);
 
         manutencaoRepository.save(manutencao);

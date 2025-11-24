@@ -44,6 +44,7 @@ public class MaquinaService {
     @Transactional
     public MaquinaResponseRecordDTO newMaquina(MaquinaRequestRecordDTO maquinaDTO){
         MaquinaEntity maquina = new MaquinaEntity();
+        maquina.setAtivo(true);
         maquina.setName(maquinaDTO.name());
         maquina.setDescription(maquinaDTO.description());
         maquina.setPressaoPadrao(maquinaDTO.pressaoPadrao());
@@ -75,4 +76,9 @@ public class MaquinaService {
         return leiturasRecentes.stream().map(LeituraMapper::toResponseDTO).collect(Collectors.toList());
     }
 
+    public void deleteMaquina(Long maquinaId){
+        MaquinaEntity maquina = maquinaRepository.findById(maquinaId).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Máquina não encontrada."));
+        maquina.setAtivo(false);
+        maquinaRepository.save(maquina);
+    }
 }

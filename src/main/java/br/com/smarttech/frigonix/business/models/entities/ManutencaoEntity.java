@@ -1,6 +1,7 @@
 package br.com.smarttech.frigonix.business.models.entities;
 
 import br.com.smarttech.frigonix.infrastructures.enums.Prioridade;
+import br.com.smarttech.frigonix.infrastructures.enums.TipoConclusao;
 import br.com.smarttech.frigonix.infrastructures.enums.TipoManutencao;
 import jakarta.persistence.*;
 
@@ -29,6 +30,10 @@ public class ManutencaoEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo")
     TipoManutencao tipoManutencao;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "conclusao")
+    TipoConclusao conclusao;
+    String relatorio;
 
     public Long getId() {
         return id;
@@ -108,5 +113,21 @@ public class ManutencaoEntity {
 
     public void setDataConclusao(LocalDateTime dataConclusao) {
         this.dataConclusao = dataConclusao;
+    }
+
+    public TipoConclusao getConclusao() {
+        return conclusao;
+    }
+
+    public void setConclusao(TipoConclusao conclusao) {
+        this.conclusao = conclusao;
+    }
+
+    public String getRelatorio() {
+        return relatorio;
+    }
+
+    public void setRelatorio(String relatorio) {
+        this.relatorio = relatorio;
     }
 }

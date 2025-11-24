@@ -32,14 +32,8 @@ public class SensorController {
         return ResponseEntity.created(location).build();
     }
 
-    @PostMapping("/{sensorId}")
-    public ResponseEntity<Void> novaLeitura(@PathVariable Long id, @RequestBody @Valid LeituraRequestRecordDTO leituraRequestDTO){
-        LeituraResponseRecordDTO newLeituraDTO = sensorService.newLeitura(id, leituraRequestDTO);
-        URI location = URI.create("/api/leitura/" + newLeituraDTO.id());
-        return ResponseEntity.created(location).build();
-    }
-
     @GetMapping
+    @PreAuthorize("hasAnyAuthority('SCOPE_VISUALIZAR')")
     public ResponseEntity<List<SensorResponseRecordDTO>> listarSensores(){
         List<SensorResponseRecordDTO> sensores = sensorService.listSensors();
         return ResponseEntity.ok(sensores);

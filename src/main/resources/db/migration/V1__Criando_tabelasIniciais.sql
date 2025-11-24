@@ -22,6 +22,7 @@ CREATE TABLE tb_maquinas
     pressao_variacao       DOUBLE PRECISION,
     humidade_padrao    DOUBLE PRECISION,
     humidade_variacao       DOUBLE PRECISION,
+    ativo           Boolean,
     CONSTRAINT pk_tb_maquinas PRIMARY KEY (maquina_id)
 );
 
