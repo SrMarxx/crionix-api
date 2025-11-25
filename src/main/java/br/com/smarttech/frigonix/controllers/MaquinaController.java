@@ -30,11 +30,18 @@ public class MaquinaController {
         return ResponseEntity.ok(maquinas);
     }
 
-    @GetMapping("/{maquinaId}")
+    @GetMapping("/leitura/{maquinaId}")
     @PreAuthorize("hasAnyAuthority('SCOPE_VISUALIZAR')")
     public ResponseEntity<List<LeituraResponseRecordDTO>> lastLeituras(@PathVariable Long maquinaId){
         List<LeituraResponseRecordDTO> leituras = maquinaService.getLeituras(maquinaId);
         return ResponseEntity.ok(leituras);
+    }
+
+    @GetMapping("/{maquinaId}")
+    @PreAuthorize("hasAnyAuthority('SCOPE_VISUALIZAR')")
+    public ResponseEntity<MaquinaResponseRecordDTO> getMaquina(@PathVariable Long maquinaId){
+        MaquinaResponseRecordDTO maquina = maquinaService.getMaquina(maquinaId);
+        return ResponseEntity.ok(maquina);
     }
 
     @PostMapping
@@ -50,5 +57,12 @@ public class MaquinaController {
     public ResponseEntity<Void> deletarMaquina(@PathVariable Long maquinaId){
         maquinaService.deleteMaquina(maquinaId);
         return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("{maquinaId}")
+    @PreAuthorize("hasAnyAuthority('SCOPE_CRIAR')")
+    public ResponseEntity<MaquinaResponseRecordDTO> updateMaquina(@PathVariable Long maquinaId, @RequestBody MaquinaRequestRecordDTO maquinaDTO){
+        MaquinaResponseRecordDTO maquina = maquinaService.updateMaquina(maquinaId, maquinaDTO);
+        return ResponseEntity.ok(maquina);
     }
 }

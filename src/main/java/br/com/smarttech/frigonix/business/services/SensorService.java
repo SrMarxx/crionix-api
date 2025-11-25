@@ -62,4 +62,19 @@ public class SensorService {
         LeituraEntity leitura = leituraRepository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Leitura não encontrada."));
         return LeituraMapper.toResponseDTO(leitura);
     }
+
+    public SensorResponseRecordDTO updateSensor(Long id, SensorRequestRecordDTO sensorDTO){
+        SensorEntity sensor = sensorRepository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Sensor não encontrado."));
+        if (sensorDTO.name() != null && !sensorDTO.name().isEmpty()) {
+            sensor.setName(sensorDTO.name());
+        }
+        if (sensorDTO.description() != null && !sensorDTO.description().isEmpty()) {
+            sensor.setDescription(sensorDTO.description());
+        }
+        if(sensorDTO.type() != null){
+            sensor.setType(sensorDTO.type());
+        }
+        SensorEntity savedSensor = sensorRepository.save(sensor);
+        return SensorMapper.toResponseDTO(savedSensor);
+    }
 }

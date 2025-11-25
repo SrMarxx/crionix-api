@@ -15,7 +15,10 @@ public class ManutencaoMapper {
                 entity.getDescricao(),
                 entity.getPrioridade(),
                 entity.getTipoManutencao(),
-                entity.getDataConclusao()
+                entity.getDataConclusao(),
+                entity.getConclusao(),
+                entity.getRelatorio(),
+                entity.getMaquina().getSetor()
         );
     }
 }

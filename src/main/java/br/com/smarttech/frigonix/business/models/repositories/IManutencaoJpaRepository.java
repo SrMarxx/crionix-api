@@ -2,6 +2,8 @@ package br.com.smarttech.frigonix.business.models.repositories;
 
 import br.com.smarttech.frigonix.business.models.entities.ManutencaoEntity;
 import br.com.smarttech.frigonix.infrastructures.enums.Prioridade;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -10,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface IManutencaoJpaRepository extends JpaRepository<ManutencaoEntity, Long> {
-    List<ManutencaoEntity> findByAtivoTrue();
+    Page<ManutencaoEntity> findByAtivoTrue(Pageable pageable);
     long countByAtivoTrue();
     @Query("SELECT m.conclusao, COUNT(m) " +
             "FROM ManutencaoEntity m " +
@@ -31,4 +33,5 @@ public interface IManutencaoJpaRepository extends JpaRepository<ManutencaoEntity
             @Param("startDate") LocalDateTime startDate,
             @Param("endDate") LocalDateTime endDate
     );
+    Page<ManutencaoEntity> findAllByOrderByDataCriacaoDesc(Pageable pageable);
 }

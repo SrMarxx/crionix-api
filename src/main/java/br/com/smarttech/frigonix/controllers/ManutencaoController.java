@@ -5,6 +5,7 @@ import br.com.smarttech.frigonix.controllers.dtos.ManutencaoConclusaoRequestReco
 import br.com.smarttech.frigonix.controllers.dtos.ManutencaoRequestRecordDTO;
 import br.com.smarttech.frigonix.controllers.dtos.ManutencaoResponseRecordDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -38,15 +39,15 @@ public class ManutencaoController {
 
     @GetMapping
     @PreAuthorize("hasAnyAuthority('SCOPE_VISUALIZAR')")
-    public ResponseEntity<List<ManutencaoResponseRecordDTO>> getManutencoes() {
-        List<ManutencaoResponseRecordDTO> manutencoes = manutencaoService.getManutencoes();
+    public ResponseEntity<List<ManutencaoResponseRecordDTO>> getManutencoes(Pageable pageable) {
+        List<ManutencaoResponseRecordDTO> manutencoes = manutencaoService.getManutencoes(pageable);
         return ResponseEntity.ok(manutencoes);
     }
 
     @GetMapping("/ativa")
     @PreAuthorize("hasAnyAuthority('SCOPE_VISUALIZAR')")
-    public ResponseEntity<List<ManutencaoResponseRecordDTO>> getManutencoesAtivas() {
-        List<ManutencaoResponseRecordDTO> manutencoes = manutencaoService.getManutencoesAtivas();
+    public ResponseEntity<List<ManutencaoResponseRecordDTO>> getManutencoesAtivas(Pageable pageable) {
+        List<ManutencaoResponseRecordDTO> manutencoes = manutencaoService.getManutencoesAtivas(pageable);
         return ResponseEntity.ok(manutencoes);
     }
 

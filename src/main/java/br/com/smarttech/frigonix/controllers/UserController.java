@@ -39,7 +39,7 @@ public class UserController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAuthority('SCOPE_CRIAR')")
+    @PreAuthorize("hasAuthority('SCOPE_VISUALIZAR')")
     public ResponseEntity<List<UserResponseRecordDTO>> getUser(){
         var users = userService.findAllUsers();
         return ResponseEntity.ok(users);

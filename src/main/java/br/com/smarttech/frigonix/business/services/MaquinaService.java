@@ -81,4 +81,40 @@ public class MaquinaService {
         maquina.setAtivo(false);
         maquinaRepository.save(maquina);
     }
+
+    public MaquinaResponseRecordDTO getMaquina(Long maquinaId){
+        MaquinaEntity maquina = maquinaRepository.findById(maquinaId).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Máquina não encontrada."));
+        return MaquinaMapper.toResponseDTO(maquina);
+    }
+
+    public MaquinaResponseRecordDTO updateMaquina(Long maquinaId, MaquinaRequestRecordDTO maquinaDTO){
+        MaquinaEntity maquina = maquinaRepository.findById(maquinaId).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Máquina não encontrada."));
+
+        if(maquinaDTO.name() != null || !maquinaDTO.name().isEmpty() || !maquinaDTO.name().isBlank()){
+            maquina.setName(maquinaDTO.name());
+        }
+        if(maquinaDTO.description() != null ||  !maquinaDTO.description().isEmpty() || !maquinaDTO.description().isBlank()){
+            maquina.setDescription(maquinaDTO.description());
+        }
+        if(maquinaDTO.pressaoPadrao() != null){
+            maquina.setPressaoPadrao(maquinaDTO.pressaoPadrao());
+        }
+        if(maquinaDTO.pressaoVariacao() != null){
+            maquina.setPressaoVariacao(maquinaDTO.pressaoVariacao());
+        }
+        if(maquinaDTO.temperaturaPadrao() != null){
+            maquina.setTemperaturaPadrao(maquinaDTO.temperaturaPadrao());
+        }
+        if(maquinaDTO.temperaturaVariacao() != null){
+            maquina.setTemperaturaVariacao(maquinaDTO.temperaturaVariacao());
+        }
+        if(maquinaDTO.humidadePadrao() != null){
+            maquina.setHumidadePadrao(maquinaDTO.humidadePadrao());
+        }
+        if(maquinaDTO.humidadeVariacao() != null){
+            maquina.setHumidadeVariacao(maquinaDTO.humidadeVariacao());
+        }
+        MaquinaEntity savedMaquina = maquinaRepository.save(maquina);
+        return MaquinaMapper.toResponseDTO(savedMaquina);
+    }
 }

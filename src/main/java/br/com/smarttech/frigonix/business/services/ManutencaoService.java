@@ -11,6 +11,8 @@ import br.com.smarttech.frigonix.controllers.dtos.ManutencaoRequestRecordDTO;
 import br.com.smarttech.frigonix.controllers.dtos.ManutencaoResponseRecordDTO;
 import br.com.smarttech.frigonix.controllers.mappers.ManutencaoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -56,13 +58,13 @@ public class ManutencaoService {
         return ManutencaoMapper.toResponseDTO(manutencao);
     }
 
-    public List<ManutencaoResponseRecordDTO> getManutencoes() {
-        List<ManutencaoEntity> list = manutencaoRepository.findAll();
+    public List<ManutencaoResponseRecordDTO> getManutencoes(Pageable pageable) {
+        Page<ManutencaoEntity> list = manutencaoRepository.findAllByOrderByDataCriacaoDesc(pageable);
         return list.stream().map(ManutencaoMapper::toResponseDTO).collect(Collectors.toList());
     }
 
-    public List<ManutencaoResponseRecordDTO> getManutencoesAtivas() {
-        List<ManutencaoEntity> list = manutencaoRepository.findByAtivoTrue();
+    public List<ManutencaoResponseRecordDTO> getManutencoesAtivas(Pageable pageable) {
+        Page<ManutencaoEntity> list = manutencaoRepository.findByAtivoTrue(pageable);
         return list.stream().map(ManutencaoMapper::toResponseDTO).collect(Collectors.toList());
     }
 

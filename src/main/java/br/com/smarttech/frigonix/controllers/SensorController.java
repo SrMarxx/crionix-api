@@ -32,6 +32,13 @@ public class SensorController {
         return ResponseEntity.created(location).build();
     }
 
+    @PatchMapping("/{sensorId}")
+    @PreAuthorize("hasAuthority('SCOPE_CRIAR')")
+    public ResponseEntity<SensorResponseRecordDTO> updateSensor(@PathVariable Long sensorId, @RequestBody SensorRequestRecordDTO sensorDTO){
+        SensorResponseRecordDTO newSensorDTO = sensorService.updateSensor(sensorId, sensorDTO);
+        return ResponseEntity.ok(newSensorDTO);
+    }
+
     @GetMapping
     @PreAuthorize("hasAnyAuthority('SCOPE_VISUALIZAR')")
     public ResponseEntity<List<SensorResponseRecordDTO>> listarSensores(){

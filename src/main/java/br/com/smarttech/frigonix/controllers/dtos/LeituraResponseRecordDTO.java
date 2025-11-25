@@ -9,6 +9,5 @@ public record LeituraResponseRecordDTO(
         Double valor,
         LocalDateTime timestamp,
         TipoSensor tipo
-
 ) {
 }

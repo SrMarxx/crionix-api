@@ -1,5 +1,6 @@
 package br.com.smarttech.frigonix.business.models.entities;
 
+import br.com.smarttech.frigonix.infrastructures.enums.Setor;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -36,6 +37,8 @@ public class MaquinaEntity {
             inverseJoinColumns = @JoinColumn (name = "sensor_id")
     )
     private Set<SensorEntity> sensors;
+    @Enumerated(EnumType.STRING)
+    private Setor setor;
     private Boolean ativo;
 
     public Long getId() {
@@ -140,5 +143,13 @@ public class MaquinaEntity {
 
     public void setAtivo(Boolean ativo) {
         this.ativo = ativo;
+    }
+
+    public Setor getSetor() {
+        return setor;
+    }
+
+    public void setSetor(Setor setor) {
+        this.setor = setor;
     }
 }
