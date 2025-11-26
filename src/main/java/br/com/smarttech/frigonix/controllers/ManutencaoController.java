@@ -4,6 +4,7 @@ import br.com.smarttech.frigonix.business.services.ManutencaoService;
 import br.com.smarttech.frigonix.controllers.dtos.ManutencaoConclusaoRequestRecordDTO;
 import br.com.smarttech.frigonix.controllers.dtos.ManutencaoRequestRecordDTO;
 import br.com.smarttech.frigonix.controllers.dtos.ManutencaoResponseRecordDTO;
+import br.com.smarttech.frigonix.controllers.dtos.PageResponseRecordDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -63,5 +64,12 @@ public class ManutencaoController {
     public ResponseEntity<Void> concluirManutencao(@PathVariable Long manutencaoId, @RequestBody ManutencaoConclusaoRequestRecordDTO manutencaoConclusaoDTO) {
         manutencaoService.concluirManutencao(manutencaoId, manutencaoConclusaoDTO);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/pages")
+    @PreAuthorize("hasAnyAuthority('SCOPE_VISUALIZAR')")
+    public ResponseEntity<PageResponseRecordDTO> getPages() {
+        PageResponseRecordDTO pages = manutencaoService.getPages();
+        return ResponseEntity.ok(pages);
     }
 }

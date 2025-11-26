@@ -9,6 +9,7 @@ import br.com.smarttech.frigonix.business.models.repositories.IUserJpaRepository
 import br.com.smarttech.frigonix.controllers.dtos.ManutencaoConclusaoRequestRecordDTO;
 import br.com.smarttech.frigonix.controllers.dtos.ManutencaoRequestRecordDTO;
 import br.com.smarttech.frigonix.controllers.dtos.ManutencaoResponseRecordDTO;
+import br.com.smarttech.frigonix.controllers.dtos.PageResponseRecordDTO;
 import br.com.smarttech.frigonix.controllers.mappers.ManutencaoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -104,5 +105,11 @@ public class ManutencaoService {
         manutencao.setAtivo(false);
 
         manutencaoRepository.save(manutencao);
+    }
+
+    public PageResponseRecordDTO getPages() {
+        Long total = manutencaoRepository.count();
+        Long pages = (total/10) + 1;
+        return new PageResponseRecordDTO(pages);
     }
 }
